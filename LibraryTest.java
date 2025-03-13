@@ -1,10 +1,10 @@
+//imports useful stuff
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 interface IBorrowable
 {
-    void borrowItem(String borrower);
+    void borrowItem(String borrower);    
     void retunrItem();
     boolean isBorrowed();
 }
@@ -23,13 +23,14 @@ class Item
         return title;
     }
 }
-
-class Book extends Item implements IBorrowable 
+//creates book class that inherits from the item class using extends
+class Book extends Item implements IBorrowable //implements IBorrowbale helps follow the stuff defind in the Iborrowable interface
 {
     String borrower;
 
     public Book(String title, int publicationYear, String author, String ISBN)
     {
+        //A super pulls from the Item class
         super(title, publicationYear);
     }
     
@@ -65,7 +66,7 @@ class Book extends Item implements IBorrowable
     }
 
 }
-
+//creates the magazine 
 class Magazine extends Item
 {
 
@@ -75,7 +76,7 @@ class Magazine extends Item
     }
 
 }
-
+//Creates the array where the books and magazine are going to be listed 
 class Library
 {
     static Library instance;
@@ -112,7 +113,7 @@ class Library
             }
         }
     }
-
+    //looks for item by title
     public Item findItemByTitle(String title)
     {
         for (Item item : items)
@@ -126,13 +127,13 @@ class Library
     }
 
 }
-
+//This helps so I can modify the existing code
 class LibraryItemFactory
 {
     public static Item createItem(String type, String title, int publicationYear, String extraData)
     {
         if (type.equalsIgnoreCase("book"))
-        {
+        {   //The UUID is used in this code to help identify each book by giving it a unique identifier. So if two books have the same name and autor, itll each book a number.
             return new Book(title, publicationYear, extraData, UUID.randomUUID().toString());
         } else if (type.equalsIgnoreCase("magazine")){
             return new Magazine(title, publicationYear, Integer.parseInt(extraData));
@@ -140,7 +141,7 @@ class LibraryItemFactory
         return null;
     }
 }
-
+//Code to test the script above
 public class LibraryTest
 {
     public static void main(String[] args)
